@@ -93,7 +93,7 @@ namespace WebGoatCore
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = false;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
                 options.LoginPath = "/Account/Login";
@@ -126,15 +126,9 @@ namespace WebGoatCore
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler($"/{StatusCodeController.NAME}?code=500");
-            }
-
+           
+            app.UseDeveloperExceptionPage();
+            
             app.UseStatusCodePagesWithRedirects($"/{StatusCodeController.NAME}?code={{0}}");
 
             app.UseStaticFiles();
